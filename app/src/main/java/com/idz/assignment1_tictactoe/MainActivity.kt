@@ -35,6 +35,22 @@ class TicTacToeActivity : AppCompatActivity() {
         setupBoardButtons()
     }
 
+    private fun handleMove(row: Int, col: Int) {
+        // Only let the move happen if the cell is empty and game is active
+        if (boardArray[row][col].isEmpty() && isGameActive) {
+            boardArray[row][col] = currentMarker
+            buttonsArray[row][col].text = currentMarker
+    
+            // Temporarily just switch players, no win-check yet
+            toggleMarker()
+        }
+    }
+    
+    private fun toggleMarker() {
+        currentMarker = if (currentMarker == "X") "O" else "X"
+        statusTextView.text = "$currentMarker Player Turn"
+    }
+
     private fun setupBoardButtons() {
     // Create a 2D array of the 9 buttons
     buttonsArray = arrayOf(
