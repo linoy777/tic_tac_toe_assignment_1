@@ -32,5 +32,37 @@ class TicTacToeActivity : AppCompatActivity() {
 
         // Initial text
         statusTextView.text = "$currentMarker Player Turn"
+        setupBoardButtons()
     }
+
+    private fun setupBoardButtons() {
+    // Create a 2D array of the 9 buttons
+    buttonsArray = arrayOf(
+        arrayOf(
+            findViewById(R.id.activity_main_button00),
+            findViewById(R.id.activity_main_button01),
+            findViewById(R.id.activity_main_button02)
+        ),
+        arrayOf(
+            findViewById(R.id.activity_main_button10),
+            findViewById(R.id.activity_main_button11),
+            findViewById(R.id.activity_main_button12)
+        ),
+        arrayOf(
+            findViewById(R.id.activity_main_button20),
+            findViewById(R.id.activity_main_button21),
+            findViewById(R.id.activity_main_button22)
+        )
+    )
+
+    // Assign click listeners to each button
+    for (row in 0 until GRID_SIZE) {
+        for (col in 0 until GRID_SIZE) {
+            buttonsArray[row][col].setOnClickListener {
+                handleMove(row, col)
+            }
+        }
+    }
+}
+    
 }
