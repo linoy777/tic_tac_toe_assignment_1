@@ -52,33 +52,78 @@ class TicTacToeActivity : AppCompatActivity() {
     }
 
     private fun setupBoardButtons() {
-    // Create a 2D array of the 9 buttons
-    buttonsArray = arrayOf(
-        arrayOf(
-            findViewById(R.id.activity_main_button00),
-            findViewById(R.id.activity_main_button01),
-            findViewById(R.id.activity_main_button02)
-        ),
-        arrayOf(
-            findViewById(R.id.activity_main_button10),
-            findViewById(R.id.activity_main_button11),
-            findViewById(R.id.activity_main_button12)
-        ),
-        arrayOf(
-            findViewById(R.id.activity_main_button20),
-            findViewById(R.id.activity_main_button21),
-            findViewById(R.id.activity_main_button22)
+        // Create a 2D array of the 9 buttons
+        buttonsArray = arrayOf(
+            arrayOf(
+                findViewById(R.id.activity_main_button00),
+                findViewById(R.id.activity_main_button01),
+                findViewById(R.id.activity_main_button02)
+            ),
+            arrayOf(
+                findViewById(R.id.activity_main_button10),
+                findViewById(R.id.activity_main_button11),
+                findViewById(R.id.activity_main_button12)
+            ),
+            arrayOf(
+                findViewById(R.id.activity_main_button20),
+                findViewById(R.id.activity_main_button21),
+                findViewById(R.id.activity_main_button22)
+            )
         )
-    )
-
-    // Assign click listeners to each button
-    for (row in 0 until GRID_SIZE) {
-        for (col in 0 until GRID_SIZE) {
-            buttonsArray[row][col].setOnClickListener {
-                handleMove(row, col)
+    
+        // Assign click listeners to each button
+        for (row in 0 until GRID_SIZE) {
+            for (col in 0 until GRID_SIZE) {
+                buttonsArray[row][col].setOnClickListener {
+                    handleMove(row, col)
+                }
             }
         }
     }
+
+private fun checkWin(): Boolean {
+    // Check rows and columns
+    for (i in 0 until GRID_SIZE) {
+        // Check row i
+        if (boardArray[i][0] == boardArray[i][1] &&
+            boardArray[i][1] == boardArray[i][2] &&
+            boardArray[i][0].isNotEmpty()) {
+            return true
+        }
+        // Check column i
+        if (boardArray[0][i] == boardArray[1][i] &&
+            boardArray[1][i] == boardArray[2][i] &&
+            boardArray[0][i].isNotEmpty()) {
+            return true
+        }
+    }
+
+    // Check diagonal (top-left to bottom-right)
+    if (boardArray[0][0] == boardArray[1][1] &&
+        boardArray[1][1] == boardArray[2][2] &&
+        boardArray[0][0].isNotEmpty()) {
+        return true
+    }
+
+    // Check diagonal (top-right to bottom-left)
+    if (boardArray[0][2] == boardArray[1][1] &&
+        boardArray[1][1] == boardArray[2][0] &&
+        boardArray[0][2].isNotEmpty()) {
+        return true
+    }
+
+    return false
 }
-    
+
+private fun isBoardFull(): Boolean {
+    for (row in 0 until GRID_SIZE) {
+        for (col in 0 until GRID_SIZE) {
+            if (boardArray[row][col].isEmpty()) {
+                return false
+            }
+        }
+    }
+    return true
+}
+
 }
