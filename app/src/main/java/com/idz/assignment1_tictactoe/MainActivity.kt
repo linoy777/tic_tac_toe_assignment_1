@@ -33,6 +33,10 @@ class TicTacToeActivity : AppCompatActivity() {
         // Initial text
         statusTextView.text = "$currentMarker Player Turn"
         setupBoardButtons()
+
+        retryButton.setOnClickListener {
+        resetGame()
+        }
     }
 
     private fun handleMove(row: Int, col: Int) {
@@ -123,7 +127,40 @@ private fun isBoardFull(): Boolean {
             }
         }
     }
-    return true
+        return true
+    }
+private fun handleMove(row: Int, col: Int) {
+    if (boardArray[row][col].isEmpty() && isGameActive) {
+        boardArray[row][col] = currentMarker
+        buttonsArray[row][col].text = currentMarker
+
+        // Now check for win or tie
+        if (checkWin()) {
+            isGameActive = false
+            statusTextView.text = "Player $currentMarker is the WINNER!"
+            retryButton.visibility = Button.VISIBLE
+        } else if (isBoardFull()) {
+            isGameActive = false
+            statusTextView.text = "It's a TIE!"
+            retryButton.visibility = Button.VISIBLE
+        } else {
+            toggleMarker()
+        }
+    }
+}
+
+// Reset function to clear the board for a new game
+private fun resetGame() {
+    for (row in 0 until GRID_SIZE) {
+        for (col in 0 until GRID_SIZE) {
+            boardArray[row][col] = ""
+            buttonsArray[row][col].text = ""
+        }
+    }
+    currentMarker = "X"
+    isGameActive = true
+    statusTextView.text = "$currentMarker Player Turn"
+    retryButton.visibility = Button.INVISIBLE
 }
 
 }
